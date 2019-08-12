@@ -5,6 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/*
+ * STUDENT NAME: Thales Costa
+ * sTUDENT ID: 301035028
+ * DESCRIPTION: This is the driver class for the application.
+ *              Used for Inventory Management
+ */
+
 namespace COMP123_S2019_FinalTestB
 {
     public static class Program
