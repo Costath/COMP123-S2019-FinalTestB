@@ -133,5 +133,24 @@ namespace COMP123_S2019_FinalTestB.Views
             LoadNames();
             GenerateNames();
         }
+
+        private void GenerateRandomAbilities()
+        {
+            Random rand = new Random();
+
+            StrengthDataLabel.Text = rand.Next(3, 18).ToString();
+            DexterityDataLabel.Text = rand.Next(3, 18).ToString();
+            ConstitutionDataLabel.Text = rand.Next(3, 18).ToString();
+            IntelligenceDataLabel.Text = rand.Next(3, 18).ToString();
+            WisdomDataLabel.Text = rand.Next(3, 18).ToString();
+            CharismaDataLabel.Text = rand.Next(3, 18).ToString();
+
+            Program.character.Strength = StrengthDataLabel.Text;
+            Program.character.Dexterity = DexterityDataLabel.Text;
+            Program.character.Constitution = ConstitutionDataLabel.Text;
+            Program.character.Intelligence = IntelligenceDataLabel.Text;
+            Program.character.Wisdom = WisdomDataLabel.Text;
+            Program.character.Charisma = CharismaDataLabel.Text;
+        }
     }
 }
