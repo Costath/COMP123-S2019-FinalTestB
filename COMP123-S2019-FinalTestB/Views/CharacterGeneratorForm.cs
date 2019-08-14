@@ -21,6 +21,7 @@ namespace COMP123_S2019_FinalTestB.Views
     {
         public static List<string> FirstNameList;
         public static List<string> LastNameList;
+        public static List<string> InventoryList;
 
         public CharacterGeneratorForm()
         {
@@ -132,6 +133,7 @@ namespace COMP123_S2019_FinalTestB.Views
         {
             LoadNames();
             GenerateNames();
+            LoadInventory();
         }
 
         private void GenerateRandomAbilities()
@@ -151,6 +153,76 @@ namespace COMP123_S2019_FinalTestB.Views
             Program.character.Intelligence = IntelligenceDataLabel.Text;
             Program.character.Wisdom = WisdomDataLabel.Text;
             Program.character.Charisma = CharismaDataLabel.Text;
+        }
+
+        private void LoadInventory()
+        {
+            InventoryList = new List<string> { };
+            using (StreamReader streamReader = new StreamReader("..\\..\\Data\\inventory.txt"))
+            {
+                string line;
+                List<string> lastNames = new List<string> { };
+
+                while (streamReader.Peek() != -1)
+                {
+                    line = streamReader.ReadLine();
+                    InventoryList.Add(line);
+                }
+            }
+        }
+
+        private void GenerateRandomInventory()
+        {
+            Random rand = new Random();
+
+            Item1DataLabel.Text = InventoryList[rand.Next(InventoryList.Count - 1)];
+            Item2DataLabel.Text = InventoryList[rand.Next(InventoryList.Count - 1)];
+            Item3DataLabel.Text = InventoryList[rand.Next(InventoryList.Count - 1)];
+            Item4DataLabel.Text = InventoryList[rand.Next(InventoryList.Count - 1)];
+
+            Program.character.Inventory.Add(Item1DataLabel.Text);
+            Program.character.Inventory.Add(Item2DataLabel.Text);
+            Program.character.Inventory.Add(Item3DataLabel.Text);
+            Program.character.Inventory.Add(Item4DataLabel.Text);
+        }
+
+        private void GenerateInventoryButton_Click(object sender, EventArgs e)
+        {
+            GenerateRandomInventory();
+        }
+
+        private void MainTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (MainTabControl.SelectedIndex == 3)
+            {
+                CSHeroNameLabel.Text = CharacterNameTextBox.Text;
+                CSCharacterNameDataLabel.Text = FirstNameDataLabel.Text + LastNameDataLabel.Text;
+                CSItem1DataLabel.Text = Program.character.Inventory[0];
+                CSItem2DataLabel.Text = Program.character.Inventory[1];
+                CSItem3DataLabel.Text = Program.character.Inventory[2];
+                CSItem4DataLabel.Text = Program.character.Inventory[3];
+                CSStrengthDataLabel.Text = Program.character.Strength;
+                CSDexterityDataLabel.Text = Program.character.Dexterity;
+                CSConstitutionDataLabel.Text = Program.character.Constitution;
+                CSIntelligenceDataLabel.Text = Program.character.Intelligence;
+                CSWisdomDataLabel.Text = Program.character.Wisdom;
+                CSCharismaDataLabel.Text = Program.character.Charisma;
+            }
+        }
+
+        private void SaveToolStripButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CharacterGeneratorForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
