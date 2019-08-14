@@ -19,6 +19,9 @@ namespace COMP123_S2019_FinalTestB.Views
 {
     public partial class CharacterGeneratorForm : MasterForm
     {
+        public static List<string> FirstNameList;
+        public static List<string> LastNameList;
+
         public CharacterGeneratorForm()
         {
             InitializeComponent();
@@ -47,29 +50,54 @@ namespace COMP123_S2019_FinalTestB.Views
                 MainTabControl.SelectedIndex++;
             }
         }
-
+        /// <summary>
+        /// This is the event hadler for the exitToolStripMenuItem Click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-
+        /// <summary>
+        /// This is the event hadler for the GenerateNamebutton Click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GenerateNamebutton_Click(object sender, EventArgs e)
         {
+            GenerateNames();
+
+            Program.character.FirstName = FirstNameDataLabel.Text;
+            Program.character.LastName = LastNameDataLabel.Text;
+
+        }
+
+        private void GenerateNames()
+        {
             Random rand = new Random();
-            string fName;
-            string lName;
+            string fName, lName;
+
+            fName = FirstNameList[rand.Next(FirstNameList.Count - 1)];
+            lName = LastNameList[rand.Next(LastNameList.Count - 1)];
+            FirstNameDataLabel.Text = fName;
+            LastNameDataLabel.Text = lName;
+        }
+
+        private static void LoadNames()
+        {
+            FirstNameList = new List<string> { };
+            LastNameList = new List<string> { };
 
             using (StreamReader streamReader = new StreamReader("..\\..\\Data\\firstNames.txt"))
             {
                 string line;
-                List<string> firstNames = new List<string> { };
 
                 while (streamReader.Peek() != -1)
                 {
                     line = streamReader.ReadLine();
-                    firstNames.Add(line);
+                    FirstNameList.Add(line);
                 }
-                fName = firstNames[rand.Next(firstNames.Count - 1)];
             }
             using (StreamReader streamReader = new StreamReader("..\\..\\Data\\lastNames.txt"))
             {
@@ -79,15 +107,16 @@ namespace COMP123_S2019_FinalTestB.Views
                 while (streamReader.Peek() != -1)
                 {
                     line = streamReader.ReadLine();
-                    lastNames.Add(line);
+                    LastNameList.Add(line);
                 }
-                lName = lastNames[rand.Next(lastNames.Count - 1)];
             }
-
-            FirstNameDataLabel.Text = fName;
-            LastNameDataLabel.Text = lName;
         }
 
+        /// <summary>
+        /// This is the event hadler for the GenerateAbilitiesButton Click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GenerateAbilitiesButton_Click(object sender, EventArgs e)
         {
             Random rand = new Random();
@@ -97,19 +126,12 @@ namespace COMP123_S2019_FinalTestB.Views
             string intelligence;
             string wisdom;
             string charisma;
+        }
 
-            //using (StreamReader streamReader = new StreamReader("..\\..\\Data\\firstNames.txt"))
-            //{
-            //    string line;
-            //    List<string> firstNames = new List<string> { };
-
-            //    while (streamReader.Peek() != -1)
-            //    {
-            //        line = streamReader.ReadLine();
-            //        firstNames.Add(line);
-            //    }
-            //    fName = firstNames[rand.Next(firstNames.Count - 1)];
-            //}
+        private void CharacterGeneratorForm_Load(object sender, EventArgs e)
+        {
+            LoadNames();
+            GenerateNames();
         }
     }
 }

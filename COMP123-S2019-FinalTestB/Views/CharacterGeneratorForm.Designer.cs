@@ -602,6 +602,7 @@
             this.Controls.Add(this.NextButton);
             this.Name = "CharacterGeneratorForm";
             this.Text = "Character Generator";
+            this.Load += new System.EventHandler(this.CharacterGeneratorForm_Load);
             this.MainTabControl.ResumeLayout(false);
             this.IdentityPage.ResumeLayout(false);
             this.IdentityTableLayoutPanel.ResumeLayout(false);
